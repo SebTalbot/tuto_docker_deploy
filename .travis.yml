@@ -1,0 +1,11 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t sebtalbot/tuto_docker_deploy -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true sebtalbot/tuto_docker_deploy npm run test
