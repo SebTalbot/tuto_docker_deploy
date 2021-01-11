@@ -9,3 +9,17 @@ before_install:
 
 script:
   - docker run -e CI=true sebtalbot/tuto_docker_deploy npm run test
+
+deploy:
+  provider: elasticbeanstalk # AWS
+  region: "ca-central-1"
+  app: "tuto_docker_deploy"
+  env: "TutoDockerDeploy-env"
+  bucket_name: "elasticbeanstalk-ca-central-1-889590288164" # AWS S3
+  bucket_path: "tuto_docker_deploy" # Project inside the bucket
+  on:
+    brach: master
+  # Generated through AWS IAM and set as env var in Travis
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
